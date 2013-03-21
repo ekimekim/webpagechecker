@@ -1,6 +1,7 @@
 import time
 from methods import METHODS
 import requests
+import gevent
 
 def compare(store, url, **info):
 	"""Compare given info to existing info, returning a dict {key: (old, new)} of changed values"""
@@ -40,6 +41,6 @@ def main(store, *urls, **kwargs):
 	if not urls:
 		urls = store.pagedata.keys()
 
-	for url in urls:
-		check_url(store, url, methods)
+	gs = [gevent.spawn(check_url, store, url, methods) for url in urls]
+	for g in gs: g.join()
 

@@ -1,5 +1,9 @@
-from data import Store
+import gevent.monkey
+gevent.monkey.patch_all()
+
 import sys, os
+
+from data import Store
 import check
 import show
 
