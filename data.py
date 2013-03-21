@@ -10,7 +10,7 @@ class Store(object):
 		if os.path.exists(self.filename):
 			self.data = json.loads(open(self.filename,'r').read())
 		else:
-			self.data = {'alerts': {}, 'pagedata': {}}
+			self.data = {'alerts': [], 'pagedata': {}}
 
 	@property
 	def alerts(self):
@@ -18,19 +18,21 @@ class Store(object):
 
 	@property
 	def pagedata(self):
-		return self.data[pagedata]
+		return self.data['pagedata']
 
 	def save(self):
 		with self.save_lock:
-			tmpfile = ".{}~".format(self.filename)
-			output = dumps(self.data)
+			tmpfile = ".{}~".format(os.path.basename(self.filename))
+			tmpfile = os.path.join(os.path.dirname(self.filename), tmpfile)
+			output = json.dumps(self.data, indent=4) + '\n'
 
+			f = None
 			try:
 				f = open(tmpfile, 'w')
 				f.write(output)
 				f.close()
 			except:
-				os.remove(tmpfile)
+				if f: os.remove(tmpfile)
 				raise
 
 			os.rename(tmpfile, self.filename)

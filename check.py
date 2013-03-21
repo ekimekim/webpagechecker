@@ -42,5 +42,5 @@ def main(store, *urls, **kwargs):
 		urls = store.pagedata.keys()
 
 	gs = [gevent.spawn(check_url, store, url, methods) for url in urls]
-	for g in gs: g.join()
+	for g in gs: g.get()
 

@@ -1,4 +1,4 @@
 from sha import sha
 
 def contenthash(resp):
-	return sha(r.content).digest()
+	return ''.join('%02x' % ord(c) for c in sha(resp.content).digest())
