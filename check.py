@@ -1,6 +1,5 @@
 import time
 from methods import METHODS
-import requests
 import gevent
 
 def compare(store, url, **info):
@@ -26,6 +25,7 @@ def do_storework(store, url, **info):
 	update(store, url, **info) # saves alerts too
 
 def check_url(store, url, methods):
+	import requests
 	resp = requests.get(url)
 	info = {name : fn(resp) for name, fn in methods.items()}
 	do_storework(store, url, **info)
