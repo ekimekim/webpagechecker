@@ -1,8 +1,7 @@
 
 def main(store, *urls, **kwargs):
 	"""Takes aditional kwarg: -v, --verbose flag"""
-	verbose = kwargs.pop('v', None) or kwargs.pop('verbose', None) or False
-	if verbose not in {True, False}: raise TypeError("verbose flag should not be given a value")
+	verbose = kwargs.pop('v', None) or kwargs.pop('verbose', None)
 	if kwargs: raise TypeError("Unknown keyword arguments")
 
 	for alert in store.alerts:
