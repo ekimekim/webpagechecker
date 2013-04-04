@@ -14,7 +14,7 @@ import show
 DEFAULT_FILENAME = lambda: os.path.join(os.environ['HOME'], ".webpagecheck.json")
 
 @with_argv
-def main(command, *urls, **kwargs):
+def main(command, *args, **kwargs):
 	"""
 	 check {URL}   - Check the given urls for changes, or all urls known if none given
 		--methods=METHOD,METHOD,...  : Specfiy a list of methods to use. Default all.
@@ -36,7 +36,7 @@ def main(command, *urls, **kwargs):
 
 	submains = dict(check=check.main, show=show.main, query=query, clear=clear, forget=forget, list=list)
 	if command not in submains: raise TypeError("Unknown sub-command")
-	submains[command](store, *urls, **kwargs)
+	submains[command](store, *args, **kwargs)
 
 
 def query(store, *urls):
