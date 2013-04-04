@@ -20,11 +20,13 @@ def main(command, *urls, **kwargs):
 	 show {URL}    - Print info on changes for the given urls (if any), or all if none given
 	 query {URL}   - Exit non-zero if any changes for the given urls, or any if none given
 	 clear {URL}   - Clear alerts for the given urls, or all if none given
+	 forget {URL}  - Remove any given urls from the list of known urls
+	 list          - List all known urls
 	"""
 	storefile = kwargs.pop('f', None) or kwargs.pop('filename', None) or DEFAULT_FILENAME()
 	store = Store(storefile)
 
-	submains = dict(check=check.main, show=show.main, query=query, clear=clear)
+	submains = dict(check=check.main, show=show.main, query=query, clear=clear, forget=forget, list=list)
 	if command not in submains: raise TypeError("Unknown sub-command")
 	submains[command](store, *urls, **kwargs)
 
@@ -48,6 +50,24 @@ def clear(store, *urls, **kwargs):
 			if a['url'] in urls:
 				store.alerts.remove(a)
 	store.save()
+
+
+def forget(store, *urls, **kwargs):
+	if kwargs: raise TypeError("Unknown keyword arguments")
+	for url in urls:
+		if url in store.pagedata:
+			del store.pagedata[url]
+	store.save()
+
+
+def list(store, v=None, verbose=None):
+	"""Takes additional kwarg: -v --verbose flag"""
+	verbose = verbose or v
+	for url, data in store.pagedata.items():
+		s = url
+		if verbose:
+			s += '\n' + '\n'.join('\t{0}: {1!r}'.format(*item) for item in data.items())
+		print s
 
 
 if __name__=='__main__':
