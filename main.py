@@ -26,6 +26,10 @@ def main(command, *urls, **kwargs):
 	 forget {URL}  - Remove any given urls from the list of known urls
 	 list          - List all known urls
 		-v --verbose  : For each url, print the current value from each method
+
+	Global options:
+		-f --filename  : The file to act as the datastore for known urls, website state, etc
+		                 Defaults to ~/.webpagecheck.json
 	"""
 	storefile = kwargs.pop('f', None) or kwargs.pop('filename', None) or DEFAULT_FILENAME()
 	store = Store(storefile)
