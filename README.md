@@ -36,3 +36,16 @@ has been optimised specifically so it can be used in a PS1 without causing notic
 Once you have seen a change alert, you can clear it with
 
 	webpagechecker clear URL
+
+Dependencies
+-----------
+
+Some of these dependencies could be edited around - for example simplejson
+could be easily replaced with the standard python JSON library.
+I'm simply an opinionated person, and I suggest that if you aren't using the following,
+you *should* be.
+
+* python 2.7
+* gevent >=1.0
+* requests
+* simplejson
