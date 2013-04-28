@@ -49,3 +49,11 @@ you *should* be.
 * gevent >=1.0
 * requests
 * simplejson
+
+Known Bugs
+-----
+The invocation
+
+	webpagechecker clear
+
+is not clearing ALL urls, only one per invocation. More testing needed.
