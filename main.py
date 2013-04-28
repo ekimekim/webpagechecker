@@ -21,6 +21,7 @@ def main(command, *args, **kwargs):
 	 show {URL}    - Print info on what methods have changed for the given urls (if any),
 	                 or all known urls if none given.
 		-v --verbose  : For each method, print the old value and the new value
+		-q --quiet    : Print urls only.
 	 query {URL}   - Exit non-zero if any changes for the given urls, or any if none given
 	 clear {URL}   - Clear alerts for the given urls, or all if none given
 	 forget {URL}  - Remove any given urls from the list of known urls

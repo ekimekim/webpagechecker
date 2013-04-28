@@ -1,7 +1,12 @@
 
 def main(store, *urls, **kwargs):
-	"""Takes aditional kwarg: -v, --verbose flag"""
+	"""Takes aditional kwargs:
+		-v, --verbose flag
+		-q, --quiet flag
+	"""
 	verbose = kwargs.pop('v', None) or kwargs.pop('verbose', None)
+	quiet = kwargs.pop('q', None) or kwargs.pop('quiet', None)
+	if verbose and quiet: raise TypeError("Cannot specify both verbose and quiet.")
 	if kwargs: raise TypeError("Unknown keyword arguments")
 
 	for alert in store.alerts:
@@ -13,5 +18,8 @@ def main(store, *urls, **kwargs):
 				for method, (old, new) in changes.items())
 		else:
 			changes = ', '.join(changes)
-		s = "{url}: Changes detected at {timestamp}: {changes}".format(changes=changes, **alert)
+		if quiet:
+			s = alert['url']
+		else:
+			s = "{url}: Changes detected at {timestamp}: {changes}".format(changes=changes, **alert)
 		print s
